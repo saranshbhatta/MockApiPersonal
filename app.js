@@ -509,6 +509,18 @@ app.post("/api/CotizenPeople", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.json({
+    message: "RigoHRM API is Live!",
+    version: "1.0.0",
+    endpoints: {
+      people: "GET /api/RigoPeople (Bearer auth + tenantId header)",
+      citizens: "POST /api/CotizenPeople (Basic auth)",
+    },
+    timestamp: new Date(),
+  });
+});
+
 /* ------------------ Start Server ------------------ */
 app.listen(PORT, () => {
   console.log(`✅ RigoHRM API running at http://localhost:${PORT}`);
