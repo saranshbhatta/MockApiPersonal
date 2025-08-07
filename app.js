@@ -383,6 +383,7 @@ function generateUpdateablePeople() {
 // GET /api/people
 // GET /api/people
 app.get("/api/RigoPeople", async (req, res) => {
+  console.log("bhitraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   try {
     // Check for Bearer token
     const authHeader = req.headers["authorization"];
@@ -413,19 +414,12 @@ app.get("/api/RigoPeople", async (req, res) => {
       return crypto.createHash("sha256").update(tokenData).digest("hex");
     });
 
-    console.log(validTokens, "validddddddddddddddddddddd");
-
     if (!validTokens.includes(token)) {
       return res.status(401).json({
         Code: "401",
         Message: "Unauthorized: Invalid token",
       });
     }
-
-    console.log("Received request with:", {
-      tenantId,
-      token: token.substring(0, 10) + "...",
-    });
 
     const maxCount = parseInt(req.query.maxCount) || 100;
     await delay(150);
@@ -438,15 +432,10 @@ app.get("/api/RigoPeople", async (req, res) => {
 
 // POST /api/citizen-people
 app.post("/api/CotizenPeople", async (req, res) => {
+  console.log("bhitraaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
   try {
     const auth = parseBasicAuth(req.headers["authorization"]);
     const { FunctionName, Data, Signature, TimeStamp } = req.body;
-
-    console.log("Received request:", {
-      FunctionName,
-      Data: Data?.substring(0, 50) + "...",
-      TimeStamp,
-    });
 
     if (
       !auth ||
@@ -471,8 +460,6 @@ app.post("/api/CotizenPeople", async (req, res) => {
     const utcNow = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
     const timeDiff = Math.abs(utcNow - reqTime);
 
-    console.log("Time validation:", { reqTime, utcNow, timeDiff });
-
     // if (isNaN(reqTime) || timeDiff > 5 * 60 * 1000) {
     //   return res
     //     .status(400)
@@ -490,7 +477,6 @@ app.post("/api/CotizenPeople", async (req, res) => {
     try {
       const jsonString = Buffer.from(Data, "base64").toString("utf-8");
       decodedData = JSON.parse(jsonString);
-      console.log("Decoded data:", decodedData);
     } catch (e) {
       console.error("Data decode error:", e);
       return res
@@ -511,10 +497,10 @@ app.post("/api/CotizenPeople", async (req, res) => {
     const response = {
       Code: "200",
       Message: "Success",
-      Data: {
-        QueryResult: [generateCitizenPeople()],
-      },
+      Data: generateCitizenPeople(),
     };
+
+    console.log(response, "responseresponseresponseresponse");
 
     res.json(response);
   } catch (err) {
