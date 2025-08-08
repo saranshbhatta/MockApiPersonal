@@ -395,10 +395,7 @@ app.get("/api/RigoPeople", async (req, res) => {
     }
 
     // Check for tenantId header
-    const tenantId =
-      req.headers["tenantid"] ||
-      req.headers["tenantId"] ||
-      req.headers["Abp-Tenantid"];
+    const tenantId = req.headers["tenantid"] || req.headers["tenantId"];
 
     if (!tenantId) {
       return res.status(400).json({
