@@ -217,7 +217,7 @@ function generatePeople(maxCount = 100) {
         i > 0 && randomInt(0, 3) === 1 ? randomInt(1, i + 1) : null,
     };
   });
-  let updatingPeopleArray = generateUpdateablePeople();
+  let updatingPeopleArray = generateEmployeeData();
 
   return [...peopleArray, ...updatingPeopleArray];
 }
@@ -368,6 +368,172 @@ function generateUpdateablePeople() {
       attRecord: randomInt(0, 1) === 1 ? "Active" : "Inactive",
       functionalCode: `FC${randomInt(1, 99).toString().padStart(2, "0")}`,
       functionalName: getRandomItem(functionalNames),
+    };
+  });
+}
+
+function generateEmployeeData() {
+  const provinces = [
+    "Province 1",
+    "Bagmati",
+    "Gandaki",
+    "Lumbini",
+    "Karnali",
+    "Sudurpashchim",
+    "Madhesh",
+  ];
+  const clusters = ["North", "South", "East", "West", "Central"];
+  const districts = [
+    "Kathmandu",
+    "Lalitpur",
+    "Bhaktapur",
+    "Kaski",
+    "Chitwan",
+    "Morang",
+    "Sunsari",
+  ];
+  const branches = [
+    "Kathmandu",
+    "Pokhara",
+    "Chitwan",
+    "Biratnagar",
+    "Nepalgunj",
+    "Dharan",
+    "Butwal",
+    "Janakpur",
+  ];
+  const departments = [
+    "IT",
+    "HR",
+    "Finance",
+    "Marketing",
+    "Operations",
+    "Sales",
+    "Admin",
+    "Legal",
+  ];
+  const designations = [
+    "Manager",
+    "Officer",
+    "Assistant",
+    "Executive",
+    "Analyst",
+    "Coordinator",
+    "Specialist",
+    "Lead",
+  ];
+  const middleNames = ["Kumar", "Bahadur", "Prasad", "Lal", "Devi", "Maya"];
+  const genders = ["Male", "Female", "Other"];
+  const maritalStatuses = ["Single", "Married", "Divorced", "Widowed"];
+  const functionalTitles = [
+    "Software Development",
+    "Data Analysis",
+    "Customer Service",
+    "Project Management",
+    "Quality Assurance",
+    "Business Development",
+  ];
+  const titles = ["Mr.", "Ms.", "Mrs.", "Dr."];
+  const firstNames = [
+    "Raj",
+    "Sita",
+    "Ram",
+    "Gita",
+    "Hari",
+    "Mina",
+    "Shyam",
+    "Kamala",
+  ];
+  const lastNames = [
+    "Sharma",
+    "Thapa",
+    "Gurung",
+    "Rai",
+    "Magar",
+    "Tamang",
+    "Shrestha",
+    "Poudel",
+  ];
+
+  function getRandomItem(array) {
+    return array[Math.floor(Math.random() * array.length)];
+  }
+
+  function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  return updatingPeopleEmails.map((email, i) => {
+    const [user] = email.split("@");
+    const [firstNameRaw, lastNameRaw] = user.split(".");
+    const firstName = firstNameRaw || "Unknown";
+    const lastName = lastNameRaw || "User";
+
+    // Generate random dates
+    const dob = new Date(
+      randomInt(1970, 2000),
+      randomInt(0, 11),
+      randomInt(1, 28)
+    );
+
+    const joinDate = new Date(
+      dob.getFullYear() + randomInt(18, 35),
+      randomInt(0, 11),
+      randomInt(1, 28)
+    );
+
+    const maxCount = updatingPeopleEmails.length;
+
+    return {
+      employeeId: i + 1,
+      province: getRandomItem(provinces),
+      cluster: getRandomItem(clusters),
+      district: getRandomItem(districts),
+      branchId: randomInt(1, 100),
+      branch: getRandomItem(branches),
+      departmentId: randomInt(1, 20),
+      department: getRandomItem(departments),
+      levelId: randomInt(1, 10),
+      deviceId: `DEV${randomInt(1000, 9999)}`,
+      firstName,
+      middleName: getRandomItem(middleNames) || null,
+      lastName,
+      designationId: randomInt(1, 50),
+      designation: getRandomItem(designations),
+      personalMobile: `98${randomInt(10000000, 99999999)}`,
+      mobile: `98${randomInt(10000000, 99999999)}`,
+      phone: `01-${randomInt(4000000, 5999999)}`,
+      ein: `EIN${randomInt(100000, 999999)}`,
+      gender: getRandomItem(genders),
+      father: `${getRandomItem(firstNames)} ${getRandomItem(lastNames)}`,
+      maritalStatus: getRandomItem(maritalStatuses),
+      citizenshipNo: `${randomInt(10, 99)}-${randomInt(10, 99)}-${randomInt(
+        10,
+        99
+      )}-${randomInt(10000, 99999)}`,
+      citizenshipIssueDate: new Date(
+        dob.getFullYear() + 16,
+        dob.getMonth(),
+        dob.getDate() + randomInt(0, 3650)
+      ),
+      dob,
+      email,
+      joinDate,
+      lastPromotionDate:
+        randomInt(0, 2) === 1
+          ? new Date(joinDate.getTime() + randomInt(365, 1825) * 86400000)
+          : null,
+      functionalTitle: getRandomItem(functionalTitles),
+      functionalTitleId: randomInt(1, 20),
+      profilePictureURL: `https://api.dicebear.com/7.x/avataaars/svg?seed=${firstName}${lastName}`,
+      title: getRandomItem(titles),
+      retirementDate:
+        randomInt(0, 10) === 1
+          ? new Date(dob.getFullYear() + 60, dob.getMonth(), dob.getDate())
+          : null,
+      totalRows: maxCount,
+      directManagerEmployeeId:
+        i > 0 && randomInt(0, 3) === 1 ? randomInt(1, i + 1) : null,
     };
   });
 }
