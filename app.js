@@ -225,124 +225,119 @@ function generatePeople(maxCount = 100) {
 function generateCitizenPeople(maxCount = 100) {
   const { firstNames, lastNames, titles } = commonData;
 
-  const branches = [
-    "Kathmandu",
-    "Pokhara",
-    "Chitwan",
-    "Biratnagar",
-    "Nepalgunj",
-    "Dharan",
-    "Butwal",
-    "Janakpur",
+  const genders = ["Male", "Female", "Other"];
+  const maritalStatuses = ["Single", "Married"];
+  const businessUnits = [
+    "Business Support",
+    "Retail Banking",
+    "Corporate Banking",
+    "IT Services",
   ];
-  const departments = [
-    "IT",
-    "HR",
-    "Finance",
-    "Marketing",
-    "Operations",
-    "Sales",
-    "Admin",
-    "Legal",
+  const groupFunctions = [
+    "Central Credit Administration & ControlAAAAAAAAAAA",
+    "Human ResourcesAAAAAAAAAAAAAAAAAA",
+    "Finance & AccountsAAAAAAAAAAAAAAAAAAA",
+    "OperationsAAAAAAAAAAAAA",
   ];
-  const designations = [
-    "Manager",
-    "Officer",
-    "Assistant",
-    "Executive",
-    "Analyst",
-    "Coordinator",
-    "Specialist",
-    "Lead",
+  const assignedFunctions = [
+    "Credit Monitoring",
+    "Payroll",
+    "Risk Analysis",
+    "Customer Support",
   ];
-  const levels = ["Junior", "Mid", "Senior", "Principal", "Lead"];
-  const functionalNames = [
-    "Software Development",
-    "Data Analysis",
-    "Customer Service",
-    "Project Management",
-    "Quality Assurance",
-    "Business Development",
+  const locations = ["Head Office", "Branch Office", "Regional Office"];
+  const levels = ["Assistant", "Officer", "Manager", "Senior Manager"];
+  const grades = [
+    "Junior Trainee Assistant",
+    "Trainee Assistant",
+    "Assistant Officer",
+    "Senior Officer",
   ];
+  const employeeTypes = ["Permanent", "Contract", "Intern"];
 
   const timestamp = new Date().toTimeString();
 
-  var peopleArray = Array.from({ length: maxCount }, (_, i) => {
+  // Generate random people
+  const peopleArray = Array.from({ length: maxCount }, (_, i) => {
     const firstName = getRandomItem(firstNames);
     const lastName = getRandomItem(lastNames);
-    const branch = `${getRandomItem(branches)} ${timestamp}`;
 
     return {
-      empCode: `EMP${(i + 1).toString().padStart(4, "0")}`,
-      adDomainUser: `${firstName.toLowerCase()}.${lastName.toLowerCase()}`,
-      title: getRandomItem(titles),
-      empName: `${firstName} ${lastName}`,
-      email: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${randomInt(
+      EmployeeId: (i + 1).toString(),
+      Title: getRandomItem(titles),
+      FirstName: firstName,
+      MiddleName: "",
+      LastName: lastName,
+      FullName: `${firstName} ${lastName}`,
+      Gender: getRandomItem(genders),
+      DateOfBirth: randomDate(new Date(1980, 0, 1), new Date(2002, 11, 31)),
+      PersonalEmail: `${firstName.toLowerCase()}.${lastName.toLowerCase()}@gmail.com`,
+      Mobile: `98${randomInt(10000000, 99999999)}`,
+      CompanyEmail: `${firstName.toLowerCase()}.${lastName.toLowerCase()}${randomInt(
         1,
         9999
       )}@company.com`,
-      mobile: `98${randomInt(10000000, 99999999)}`,
-      branchCode: `BR${randomInt(1, 99).toString().padStart(2, "0")}`,
-      branchName: branch,
-      departmentId: randomInt(1, 20).toString(),
-      departmentName: getRandomItem(departments),
-      designationId: randomInt(1, 50).toString(),
-      designation: getRandomItem(designations),
-      levelId: randomInt(1, 10).toString(),
-      levelName: getRandomItem(levels),
-      jobName: `${getRandomItem(levels)} ${getRandomItem(designations)}`,
-      attRecord: randomInt(0, 1) === 1 ? "Active" : "Inactive",
-      functionalCode: `FC${randomInt(1, 99).toString().padStart(2, "0")}`,
-      functionalName: getRandomItem(functionalNames),
+      MaritialStatus: getRandomItem(maritalStatuses),
+      Nationality: "Nepali",
+      PermanentState: "",
+      PermanentCity: "",
+      PermanentStreet: "",
+      EmployeeStatus: randomInt(0, 1) === 1 ? "Active" : "Inactive",
+      SupervisorCode: randomInt(1000, 9999).toString(),
+      BusinessUnit: getRandomItem(businessUnits),
+      GroupFunction: getRandomItem(groupFunctions),
+      AssignedFunction: getRandomItem(assignedFunctions),
+      Location: getRandomItem(locations),
+      Level: getRandomItem(levels),
+      Grade: getRandomItem(grades),
+      EmployeeType: getRandomItem(employeeTypes),
     };
   });
 
-  let updatingPeopleArray = generateUpdateablePeople();
+  // Include the updatable people in same structure
+  const updatingPeopleArray = generateUpdateablePeople();
 
   return [...peopleArray, ...updatingPeopleArray];
 }
+function randomDate(start, end) {
+  const date = new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
+  return date.toISOString().split("T")[0];
+}
 
 function generateUpdateablePeople() {
-  const branches = [
-    "Kathmandu",
-    "Pokhara",
-    "Chitwan",
-    "Biratnagar",
-    "Nepalgunj",
-    "Dharan",
-    "Butwal",
-    "Janakpur",
+  const genders = ["Male", "Female", "Other"];
+  const maritalStatuses = ["Single", "Married"];
+  const businessUnits = [
+    "Business Support",
+    "Retail Banking",
+    "Corporate Banking",
+    "IT Services",
   ];
-  const departments = [
-    "IT",
-    "HR",
-    "Finance",
-    "Marketing",
+  const groupFunctions = [
+    "Central Credit Administration & Control",
+    "Human Resources",
+    "Finance & Accounts",
     "Operations",
-    "Sales",
-    "Admin",
-    "Legal",
   ];
-  const designations = [
-    "Manager",
-    "Officer",
-    "Assistant",
-    "Executive",
-    "Analyst",
-    "Coordinator",
-    "Specialist",
-    "Lead",
+  const assignedFunctions = [
+    "Credit Monitoring",
+    "Payroll",
+    "Risk Analysis",
+    "Customer Support",
   ];
-  const levels = ["Junior", "Mid", "Senior", "Principal", "Lead"];
-  const functionalNames = [
-    "Software Development",
-    "Data Analysis",
-    "Customer Service",
-    "Project Management",
-    "Quality Assurance",
-    "Business Development",
+  const locations = ["Head Office", "Branch Office", "Regional Office"];
+  const levels = ["Assistant", "Officer", "Manager", "Senior Manager"];
+  const grades = [
+    "Junior Trainee Assistant",
+    "Trainee Assistant",
+    "Assistant Officer",
+    "Senior Officer",
   ];
+  const employeeTypes = ["Permanent", "Contract", "Intern"];
   const { titles } = commonData;
+
   return updatingPeopleEmails.map((email, i) => {
     const [user] = email.split("@");
     const [firstNameRaw, lastNameRaw] = user.split(".");
@@ -350,24 +345,31 @@ function generateUpdateablePeople() {
     const lastName = lastNameRaw || "User";
 
     return {
-      empCode: `EMP${(i + 1).toString().padStart(4, "0")}`,
-      adDomainUser: `${firstName.toLowerCase()}.${lastName.toLowerCase()}`,
-      title: getRandomItem(titles),
-      empName: `${firstName} ${lastName}`,
-      email,
-      mobile: `98${randomInt(10000000, 99999999)}`,
-      branchCode: `BR${randomInt(1, 99).toString().padStart(2, "0")}`,
-      branchName: `Branch ${randomInt(1, 10)}`,
-      departmentId: randomInt(1, 20).toString(),
-      departmentName: getRandomItem(departments),
-      designationId: randomInt(1, 50).toString(),
-      designation: getRandomItem(designations),
-      levelId: randomInt(1, 10).toString(),
-      levelName: getRandomItem(levels),
-      jobName: `${getRandomItem(levels)} ${getRandomItem(designations)}`,
-      attRecord: randomInt(0, 1) === 1 ? "Active" : "Inactive",
-      functionalCode: `FC${randomInt(1, 99).toString().padStart(2, "0")}`,
-      functionalName: getRandomItem(functionalNames),
+      EmployeeId: (i + 1).toString(),
+      Title: getRandomItem(titles),
+      FirstName: firstName,
+      MiddleName: "",
+      LastName: lastName,
+      FullName: `${firstName} ${lastName}`,
+      Gender: getRandomItem(genders),
+      DateOfBirth: randomDate(new Date(1980, 0, 1), new Date(2002, 11, 31)),
+      PersonalEmail: email,
+      Mobile: `98${randomInt(10000000, 99999999)}`,
+      CompanyEmail: email,
+      MaritialStatus: getRandomItem(maritalStatuses),
+      Nationality: "Nepali",
+      PermanentState: "",
+      PermanentCity: "",
+      PermanentStreet: "",
+      EmployeeStatus: randomInt(0, 1) === 1 ? "Active" : "Inactive",
+      SupervisorCode: randomInt(1000, 9999).toString(),
+      BusinessUnit: getRandomItem(businessUnits),
+      GroupFunction: getRandomItem(groupFunctions),
+      AssignedFunction: getRandomItem(assignedFunctions),
+      Location: getRandomItem(locations),
+      Level: getRandomItem(levels),
+      Grade: getRandomItem(grades),
+      EmployeeType: getRandomItem(employeeTypes),
     };
   });
 }
