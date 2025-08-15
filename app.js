@@ -222,7 +222,7 @@ function generatePeople(maxCount = 100) {
   return [...peopleArray, ...updatingPeopleArray];
 }
 
-function generateCitizenPeople(maxCount = 100) {
+function generateCitizenPeople(maxCount = 2) {
   const { firstNames, lastNames, titles } = commonData;
 
   const genders = ["Male", "Female", "Other"];
